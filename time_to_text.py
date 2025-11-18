@@ -1,5 +1,3 @@
-
-
 def time_to_text(hour,minute):
     #Проверка на особые случаи, кроме "минуты 00"
     if hour == 0 and minute == 0:
@@ -76,6 +74,11 @@ def check_time_input(time):
     
     
     try:
+        hour,minute =time[0],time[1]
+        if time[0]=='-0':
+            return "Введены недопустимые данные: часы должны быть от 0 до 23.", False
+        elif time[1]=='-0':
+            return "Введены недопустимые данные: минуты должны быть от 0 до 59", False
         hour,minute=int(time[0]),int(time[1])
         if hour>=24 or hour<0:
             return "Введены недопустимые данные: часы должны быть от 0 до 23.", False
