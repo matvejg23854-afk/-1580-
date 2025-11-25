@@ -34,6 +34,7 @@ def time_to_text(hour,minute):
         
         
     #Минуты
+    #minute_remainder=minute%10 не оимеет смысла делать,т.к.
     if minute==1 or minute==21 or minute==31 or minute==41 or minute==51:
         result=result+str(minute)+' минута '
     elif minute>=2 and minute<=4 or minute>=22 and minute<=24 or minute>=32 and minute<=34 or minute>=42 and minute<=44 or minute>=52 and minute<=54:
@@ -46,13 +47,13 @@ def time_to_text(hour,minute):
         result=result+str(minute)+' минут '
     
     #Обработка времнных интервалов
-    if 0<=hour and hour<=5 and minute<=59:
+    if hour<6:
         result+='ночи'
-    elif 6<=hour and hour<=11 and minute<=59:
+    elif hour<12:
         result+='утра'
-    elif 12<=hour and hour<=17 and minute<=59:
+    elif hour<18:
         result+='дня'
-    elif 18<=hour and hour<=23 and minute<=59:
+    elif hour<24:
         result+='вечера'
         
     if no_minutes:
@@ -80,9 +81,9 @@ def check_time_input(time):
         elif time[1]=='-0':
             return "Введены недопустимые данные: минуты должны быть от 0 до 59", False
         hour,minute=int(time[0]),int(time[1])
-        if hour>=24 or hour<0:
+        if hour>23 or hour<0:
             return "Введены недопустимые данные: часы должны быть от 0 до 23.", False
-        elif minute>=60 or minute<0:
+        elif minute>59 or minute<0:
             return "Введены недопустимые данные: минуты должны быть от 0 до 59", False
         
     except ValueError:
@@ -104,7 +105,7 @@ def main():
         
     pass
 
-
 if __name__ == "__main__":
     main()
+
 
