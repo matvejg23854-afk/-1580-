@@ -1,21 +1,72 @@
+import time
 
+
+def determine_the_zodiac_sign(date):
+    result="Знак зодиака вашей даты: "
+    
+    day,mounth =int(date[0]),int(date[1])
+    
+    #ВОДОЛЕЙ
+    if ( mounth==1 and day>20 ) or (  mounth==2 and day<20 ):
+        result+='Водолей'
+    #РЫБЫ
+    elif ( mounth==2 and day>19 ) or (  mounth==3 and day<21 ):
+        result+='Рыбы'
+    #ОВЕН
+    elif ( mounth==3 and day>20 ) or (  mounth==4 and day<21 ):
+        result+='Овен'
+    #ТЕЛЕЦ
+    elif ( mounth==4 and day>20 ) or (  mounth==5 and day<22 ):
+        result+='Телец'
+    #БЛИЗНЕЦЫ
+    elif ( mounth==5 and day>21 ) or (  mounth==6 and day<22 ):
+        result+='Близнецы'
+    #РАК
+    elif ( mounth==6 and day>21 ) or (  mounth==7 and day<23 ):
+        result+='Рак'
+    #ЛЕВ
+    elif ( mounth==7 and day>22 ) or (  mounth==8 and day<22 ):
+        result+='Лев'
+    #ДЕВА
+    elif ( mounth==8 and day>21 ) or (  mounth==9 and day<24 ):
+        result+='Дева'
+    #ВЕСЫ
+    elif ( mounth==9 and day>23 ) or (  mounth==10 and day<24 ):
+        result+='Весы'
+    #СКОРПИОН
+    elif ( mounth==10 and day>23 ) or (  mounth==11 and day<23 ):
+        result+='Скорпион'
+    #СТРЕЛЕЦ
+    elif ( mounth==11 and day>22 ) or (  mounth==12 and day<23 ):
+        result+='Стрелец'
+    #КОЗЕРОГ
+    elif ( mounth==12 and day>22 ) or (  mounth==1 and day<21 ):
+        result+='Козерог'    
+    
+    
+    
+
+    
+    return result
+        
+    
+    
 def check_date_input(date):
     
     if len(date)==0:
         return "Введены недопустимые данные: вы ничего не ввели", False
-    elif len(time)<2 or len(time)>2:
+    elif len(date)<2 or len(date)>2:
         return "Введены недопустимые данные: вы неправильно ввели данные. Формат: ЧИСЛО МЕСЯЦ", False
     
     
     try:
-        day,mounth =date[0],date[1]
-        if date[0]=='-0':
-            return "Введены недопустимые данные: день должен быть от 0", False
-        elif date[1]=='-0':
-            return "Введены недопустимые данные: месяц должен быть от 0", False
-        day,mounth=int(time[0]),int(time[1])
-        if mounth>12 or mounth<0:
-            return "Введены недопустимые данные: месяц должны быть от 0 до 12", False
+        day,mounth =int(date[0]),int(date[1])
+    
+        if day<1:
+            return "Введены недопустимые данные: день должен быть от 1", False
+        if mounth>12 or mounth<1:
+            return "Введены недопустимые данные: месяц должен быть от 1 до 12", False
+       
         
         
         #проверка дней по месяцам:
@@ -34,8 +85,16 @@ def check_date_input(date):
         Ноябрь (11) - 30
         Декабрь (12) - 31
         '''
+        mountheswith30days=[4,6,9,11]
         if mounth==2:
-            pass
+            if day>29:
+                return "Введены недопустимые данные: в этом месяце может не может быть больше 29 дней", False
+        elif mounth in mountheswith30days:
+            if day>30:
+                return "Введены недопустимые данные: в этом месяце может не может быть больше 30 дней", False
+        else:
+            if day>31:
+                return "Введены недопустимые данные: в этом месяце может не может быть больше 31 дня", False
         
     except ValueError:
         return "Введены недопустимые данные: программа принимает только натуральные числа и 0", False
@@ -43,16 +102,19 @@ def check_date_input(date):
     else:
         return "",True
 
-def main():    
-    date_input=input("Введите дату в формате: ЧИСЛО МЕСЯЦ").split()
+def main():
+    print("Привет! Это программа для определения знака зодиака")
+    time.sleep(1)
     
-    error_message,is_valid=check_time_input(date_input)
+    date_input=input("Введите дату: ").split()
+    
+    error_message,is_valid=check_date_input(date_input)
     
     if not is_valid:
         print(error_message)
         
     else:
-        pass
-
+        print(determine_the_zodiac_sign(date_input))
+        
 if __name__ == "__main__":
     main()
