@@ -8,6 +8,24 @@ class Planet:
         self.planet_type=planet_type
         Planet.counter+=1
         self.id=Planet.counter
+
+
     def __str__(self):
         return (f'~~~~~~~~~Планета~~~~~~~~~\nНазвание: {self.name}\nРадиус: {self.radius}(км)\nМасса: {self.mass}(кг)\nРасстояние до солнца: {self.distance}(км)\nТип планеты: {self.planet_type}\nID планеты: {self.id}\n~~~~~~~~~~~~~~~~~~~~~~~~~')
+    def __repr__(self):
+        return (f"Planet(name='{self.name}',radius={self.radius}, "
+                f"mass={self.mass},distance={self.distance}, "
+                f"type='{self.planet_type}',id={self.id})")
+
+
+    def __lt__(self,other):
+        return self.distance < other.distance
+    def __gt__(self,other):
+        return self.distance > other.distance
+    def __eq__(self,other):
+        return self.id < other.id
+    def __le__(self,other):
+        return self.distance <= other.distance
+    def __ge__(self,other):
+        return self.distance >= other.distance
 
