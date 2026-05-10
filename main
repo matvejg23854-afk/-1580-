@@ -5,7 +5,11 @@ planets=[]
 def input_float(text):
     while True:
         try:
-            return float(input(text))
+            value=float(input(text))
+            if value<=0:
+                print("❌Значение должно быть больше 0")
+                continue
+            return value
         except ValueError:
             print("❌Введите число!")
 
@@ -38,6 +42,16 @@ def add_planet():
     planet=Planet(name,radius,mass,distance,planet_type)
     planets.append(planet)
     print(f'✅Планета {planet.name} с ID {planet.id} успешно создана!')
+
+def delete_planet():
+    name=input('Введите название планеты для удаления: ')
+    for planet in planets:
+        if planet.name.lower() == name:
+            planets.remove(planet)
+            print("✅Планета успешно удалена")
+            return
+
+    print("❌ Планета не найдена")
 
 def search():
     print('~~~~~~~~~~~~МЕНЮ ПОИСКА~~~~~~~~~~~~')
@@ -105,13 +119,15 @@ def menu():
         elif choice=='6':
             pass
         elif choice=='7':
-            pass
+            delete_planet()
         elif choice=='8':
             pass
         elif choice=='9':
-            pass
+            print('❌Временно недоступно')
         elif choice=='10':
-            pass
+            print('✅Успешный выход!')
+            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            break
         else:
             print('❌Неверный выбор!')
 
