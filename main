@@ -36,7 +36,7 @@ def add_planet():
     name=input('Введите название планеты: ')
     radius = input_float('Введите радиус планеты (в км): ')
     mass = input_float('Введите массу планеты (в кг): ')
-    distance = input_float('Введите расстояние от планеты до солнца (в км): ')
+    distance = input_float('Введите расстояние от планеты до Солнца (в км): ')
     planet_type = input('Введите тип планеты: ')
 
     planet=Planet(name,radius,mass,distance,planet_type)
@@ -46,11 +46,27 @@ def add_planet():
 def delete_planet():
     name=input('Введите название планеты для удаления: ')
     for planet in planets:
-        if planet.name.lower() == name:
+        if planet.name.lower() == name.lower():
             planets.remove(planet)
             print("✅Планета успешно удалена")
             return
 
+    print("❌ Планета не найдена")
+def edit_planet():
+    name=input('Введите название планеты для изменения параметров: ')
+
+    for planet in planets:
+        if planet.name.lower()==name.lower():
+            print('Введите новые данные планеты')
+            print()
+            planet.name=input('Название: ')
+            planet.radius=input_float('Радиус (в км):')
+            planet.mass=input_float('Масса (в кг):')
+            planet.distance=input_float('Расстояние от планеты до Солнца (в км):')
+            planet.planet_type=input('Тип: ')
+            print()
+            print('✅Планета успешно изменена')
+            return
     print("❌ Планета не найдена")
 
 def search():
@@ -77,8 +93,51 @@ def search():
             if planet.planet_type.lower()==planet_type.lower():
                 print(planet)
                 found=True
+    else:
+        print("❌ Неверный выбор")
+        return
     if not found:
         print('⛔Ничего не найдено')
+def sort_planets():
+    if not planets:
+        print("⛔ БД пустая")
+        return
+    print("~~~~~~~~~~~~СОРТИРОВКА~~~~~~~~~~~~")
+    print("1 - по расстоянию до Солнца")
+    print("2 - по радиусу")
+    print("3 - по массе")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    choice = input("Выбор: ")
+    n = len(planets)
+    for i in range(n):
+        for j in range(n - i - 1):
+            if choice=='1':
+                condition=planets[j] > planets[j + 1]
+            elif choice=='2':
+                condition = planets[j].radius>planets[j + 1].radius
+            elif choice=='3':
+                condition=planets[j].mass>planets[j + 1].mass
+
+            else:
+                print("❌ Неверный выбор")
+                return
+
+            if condition:
+                planets[j], planets[j + 1] = planets[j + 1], planets[j]
+
+    print("✅ Планеты успешно отсортированы")
+
+def export_to_csv():
+    name=input('Введите название файла для экспорта в CSV: ')
+    if not name.endswith('.csv'):
+        name+='.csv'
+    with open(name, 'w', encoding='UTF-8') as file_w:
+        file_w.write("name,radius,mass,distance,planet_type\n")
+
+        for planet in planets:
+            file_w.write(f"{planet.name},{planet.radius},{planet.mass},{planet.distance},{planet.planet_type}\n")
+
+    print("✅ Экспорт в CSV завершён")
 
 def menu():
     while True:
@@ -117,13 +176,13 @@ def menu():
         elif choice=='5':
             search()
         elif choice=='6':
-            pass
+            edit_planet()
         elif choice=='7':
             delete_planet()
         elif choice=='8':
-            pass
+            sort_planets()
         elif choice=='9':
-            print('❌Временно недоступно')
+            export_to_csv()
         elif choice=='10':
             print('✅Успешный выход!')
             print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
