@@ -8,6 +8,7 @@ class Planet:
         self.planet_type=planet_type
         Planet.counter+=1
         self.id=Planet.counter
+        print(f"Добавление планеты (в RAM) с ID: {self.id}")
 
 
     def __str__(self):
@@ -23,9 +24,20 @@ class Planet:
     def __gt__(self,other):
         return self.distance > other.distance
     def __eq__(self,other):
-        return self.id < other.id
+        return self.name == other.name
     def __le__(self,other):
         return self.distance <= other.distance
     def __ge__(self,other):
         return self.distance >= other.distance
+
+    def __copy__(self):
+        return Planet(
+            self.name,
+            self.radius,
+            self.mass,
+            self.distance,
+            self.planet_type
+        )
+    def __del__(self):
+        print(f'Удаление планеты (из RAM) с ID: {self.id}')
 
