@@ -1,0 +1,7 @@
+class Planet:
+    def __init__(self,name,radius,mass,distance,planet_type):
+        self.name=name
+        self.radius=radius
+        self.mass=mass
+        self.distance=distance
+        self.planet_type=planet_type
