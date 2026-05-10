@@ -1,0 +1,5 @@
+from planet import Planet
+
+Earth=Planet('Земля',6378.1,(5.9726)*10**24,149597871,'Земной')
+
+print(Earth.name)
