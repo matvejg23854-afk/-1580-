@@ -63,32 +63,35 @@ def delete_book():
     for book in books:
         if choice=='1':
             if book.name.lower() == name.lower():
+                book_id=book.id
                 books.remove(book)
-                print("✅ Книга успешно удалена")
-                return
+                print(f"✅ Книга успешно удалена c ID {book_id}")
+
         elif choice=='2':
             if str(book.id) == id:
                 books.remove(book)
-                print("✅ Книга успешно удалена")
+                print(f"✅ Книга успешно удалена с ID {book_id}")
                 return
 
     print("❌ Книга для удаления не найдена")
-def edit_planet():
-    name=input('Введите название планеты для изменения параметров: ')
+
+def edit_book():
+    id=input('Введите ID книги для изменения параметров: ')
 
     for planet in planets:
-        if planet.name.lower()==name.lower():
-            print('Введите новые данные планеты')
+        if planet.id==id:
+            print('Введите новые данные книги')
             print()
-            planet.name=input('Название: ')
-            planet.radius=input_float('Радиус (в км):')
-            planet.mass=input_float('Масса (в кг):')
-            planet.distance=input_float('Расстояние от планеты до Солнца (в км):')
-            planet.planet_type=input('Тип: ')
+            book.name=input('Название: ')
+            book.author=input('ФИО автора: ')
+            book.book.year_of_publication=input_int('Год издания: ')
+            book.isbn=input('ISBN: ')
+            book.genre=input('Жанр: ')
+            book.pages = input_int('Количество страниц: ')
             print()
-            print('✅Планета успешно изменена')
+            print('✅ Книга успешно изменена')
             return
-    print("❌ Планета не найдена")
+    print("❌ Книга не найдена")
 
 def search():
     print('~~~~~~~~~~~~МЕНЮ ПОИСКА~~~~~~~~~~~~')
@@ -127,36 +130,32 @@ def search():
         return
     if not found:
         print('⛔ Ничего не найдено')
-        
-        
-def sort_planets():
+
+
+def sort_books():
     if not planets:
         print("⛔ БД пустая")
         return
     print("~~~~~~~~~~~~СОРТИРОВКА~~~~~~~~~~~~")
-    print("1 - по расстоянию до Солнца")
-    print("2 - по радиусу")
-    print("3 - по массе")
+    print("1 - по количеству страниц")
+    print("2 - по году издания")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     choice = input("Выбор: ")
     n = len(planets)
     for i in range(n):
-        for j in range(n - i - 1):
+        for j in range(n-i-1):
             if choice=='1':
-                condition=planets[j] > planets[j + 1]
+                condition=books[j]>books[j+1]
             elif choice=='2':
-                condition = planets[j].radius>planets[j + 1].radius
-            elif choice=='3':
-                condition=planets[j].mass>planets[j + 1].mass
-
+                condition=planets[j].year_of_publication>planets[j+1].year_of_publication
             else:
                 print("❌ Неверный выбор")
                 return
 
             if condition:
-                planets[j], planets[j + 1] = planets[j + 1], planets[j]
+                books[j], books[j + 1] = books[j + 1], books[j]
 
-    print("✅ Планеты успешно отсортированы")
+    print("✅ Книги успешно отсортированы")
 
 def export_to_csv():
     print('❗ВНИМАНИЕ!\n1)Формат .csv сохраняет данные без учета форматирования.\n2)Если файл с данным названием существует, то он должен быть закрыт.')
@@ -175,10 +174,10 @@ def export_to_csv():
         name+='.csv'
     with open(name, 'w', encoding='UTF-8-SIG') as file_w:
 
-        file_w.write("name\tradius\tmass\tdistance\tplanet_type\n")
+        file_w.write("name\tauthor\tyear_of_publication\tisbn\tgenre\tpages\n")
 
-        for planet in planets:
-            file_w.write(f"{planet.name}\t{planet.radius}\t{planet.mass}\t{planet.distance}\t{planet.planet_type}\n")
+        for book in books:
+            file_w.write(f"{book.name}\t{book.author}\t{book.year_of_publication}\t{book.isbn}\t{book.genre}\t{book.pages}\n")
 
     print("✅ Экспорт в CSV завершён")
 
@@ -220,13 +219,13 @@ def menu():
         elif choice=='5':
             search()
         elif choice=='6':
-            print('❌ Временно не работает!')
+            edit_book()
         elif choice=='7':
-            print('❌ Временно не работает!')
+            delete_book()
         elif choice=='8':
-            print('❌ Временно не работает!')
+            sort_books()
         elif choice=='9':
-            print('❌ Временно не работает!')
+            export_to_csv()
         elif choice=='10':
             print('✅ Успешный выход!')
             print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
