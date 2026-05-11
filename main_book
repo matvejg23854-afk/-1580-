@@ -13,6 +13,12 @@ def input_int(text):
             return value
         except ValueError:
             print("❌ Введите число!")
+def input_str(text):
+    while True:
+        value=input(text).strip()
+        if value:
+            return value
+        print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
     with open(file_name,'r',encoding='UTF-8') as file_r:
@@ -40,11 +46,11 @@ def save_to_file(file_name):
         print(f'✅ Книги успешно сохранены!')
 
 def add_book():
-    name=input('Введите название книги: ')
-    author = input('Введите ФИО автора книги: ')
+    name=input_str('Введите название книги: ')
+    author = input_str('Введите ФИО автора книги: ')
     year_of_publication = input_int('Введите год издания книги: ')
-    isbn = input('Введите ISBN: ')
-    genre = input('Введите жанр книги: ')
+    isbn = input_str('Введите ISBN: ')
+    genre = input_str('Введите жанр книги: ')
     pages = input_int('Введите количество страниц: ')
 
     book=Book(name,author,year_of_publication,isbn,genre,pages)
@@ -87,11 +93,11 @@ def edit_book():
         if str(book.id)==id:
             print('Введите новые данные книги')
             print()
-            book.name=input('Название: ')
-            book.author=input('ФИО автора: ')
+            book.name=input_str('Название: ')
+            book.author=input_str('ФИО автора: ')
             book.year_of_publication=input_int('Год издания: ')
-            book.isbn=input('ISBN: ')
-            book.genre=input('Жанр: ')
+            book.isbn=input_str('ISBN: ')
+            book.genre=input_str('Жанр: ')
             book.pages = input_int('Количество страниц: ')
             print()
             print('✅ Книга успешно изменена')
