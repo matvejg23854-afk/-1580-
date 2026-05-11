@@ -1,1 +1,244 @@
-pass
+from book import Book
+import time
+
+books=[]
+
+def input_int(text):
+    while True:
+        try:
+            value=int(input(text))
+            if value<=0:
+                print("❌ Значение должно быть больше 0")
+                continue
+            return value
+        except ValueError:
+            print("❌ Введите число!")
+
+def load_from_file(file_name):
+    with open(file_name,'r',encoding='UTF-8') as file_r:
+        for string in file_r:
+            if not string.strip():
+                continue
+
+            data=string.strip().split(';')
+            book=Book(data[0],data[1],
+                          input_int(data[2]),
+                          data[3],data[4],
+                          input_int(data[5]))
+            books.append(book)
+        print('✅ Книги успешно загружены!')
+
+def save_to_file(file_name):
+    with open(file_name,'w',encoding='UTF-8') as file_w:
+        for book in books:
+            file_w.write(f'{book.name};{book.author};{book.year_of_publication};{book.isbn};{book.genre};{book.pages}\n')
+        print(f'✅ Книги успешно сохранены!')
+
+def add_book():
+    name=input('Введите название книги: ')
+    author = input('Введите ФИО автора книги: ')
+    year_of_publication = input_int('Введите год издания книги: ')
+    isbn = input('Введите ISBN: ')
+    genre = input('Введите жанр книги: ')
+    pages = input_int('Введите количество страниц: ')
+
+    book=Book(name,author,year_of_publication,isbn,genre,pages)
+    books.append(book)
+    print(f'✅ Книга {book.name} с ID {book.id} успешно создана!')
+
+def delete_book():
+    print('~~~~~~~~~~~~МЕНЮ УДАЛЕНИЯ~~~~~~~~~~~~')
+    print('1 - удаление по названию книги')
+    print('2 - удаление по ID книги')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+    choice = input('Выбор: ')
+    if choice=='1':
+        name=input('Введите название книги для удаления: ')
+    elif choice=='2':
+        id=input('Введите ID книги для удаления: ')
+    else:
+        print("❌ Неверный выбор")
+        return
+    for book in books:
+        if choice=='1':
+            if book.name.lower() == name.lower():
+                books.remove(book)
+                print("✅ Книга успешно удалена")
+                return
+        elif choice=='2':
+            if str(book.id) == id:
+                books.remove(book)
+                print("✅ Книга успешно удалена")
+                return
+
+    print("❌ Книга для удаления не найдена")
+def edit_planet():
+    name=input('Введите название планеты для изменения параметров: ')
+
+    for planet in planets:
+        if planet.name.lower()==name.lower():
+            print('Введите новые данные планеты')
+            print()
+            planet.name=input('Название: ')
+            planet.radius=input_float('Радиус (в км):')
+            planet.mass=input_float('Масса (в кг):')
+            planet.distance=input_float('Расстояние от планеты до Солнца (в км):')
+            planet.planet_type=input('Тип: ')
+            print()
+            print('✅Планета успешно изменена')
+            return
+    print("❌ Планета не найдена")
+
+def search():
+    print('~~~~~~~~~~~~МЕНЮ ПОИСКА~~~~~~~~~~~~')
+    print('1 - поиск по названию книги')
+    print('2 - поиск по жанру книги')
+    print('3 - поиск по автору книги')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+    choice=input('Выбор: ')
+    found=False
+
+    if choice=='1':
+        name=input('Введите название книги: ')
+
+        for book in books:
+            if book.name.lower()==name.lower():
+                print(book)
+                found=True
+
+    elif choice=='2':
+        genre=input('Введите жанр книги: ')
+
+        for book in books:
+            if book.genre.lower()==genre.lower():
+                print(book)
+                found=True
+    elif choice=='3':
+        author = input('Введите автора книги: ')
+
+        for book in books:
+            if book.author.lower() == author.lower():
+                print(book)
+                found = True
+    else:
+        print("❌ Неверный выбор")
+        return
+    if not found:
+        print('⛔ Ничего не найдено')
+        
+        
+def sort_planets():
+    if not planets:
+        print("⛔ БД пустая")
+        return
+    print("~~~~~~~~~~~~СОРТИРОВКА~~~~~~~~~~~~")
+    print("1 - по расстоянию до Солнца")
+    print("2 - по радиусу")
+    print("3 - по массе")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    choice = input("Выбор: ")
+    n = len(planets)
+    for i in range(n):
+        for j in range(n - i - 1):
+            if choice=='1':
+                condition=planets[j] > planets[j + 1]
+            elif choice=='2':
+                condition = planets[j].radius>planets[j + 1].radius
+            elif choice=='3':
+                condition=planets[j].mass>planets[j + 1].mass
+
+            else:
+                print("❌ Неверный выбор")
+                return
+
+            if condition:
+                planets[j], planets[j + 1] = planets[j + 1], planets[j]
+
+    print("✅ Планеты успешно отсортированы")
+
+def export_to_csv():
+    print('❗ВНИМАНИЕ!\n1)Формат .csv сохраняет данные без учета форматирования.\n2)Если файл с данным названием существует, то он должен быть закрыт.')
+
+    time.sleep(1)
+
+    answers_of_agreement=('да','y','д','yes','yeah','yep','ознакомился','ознакомилась','ознакомилось','пойдет','го','все ок','ок','jr','lf')
+    choice=input('Вы подтверждаете, что ознакомились с предупреждением? Да/нет: ')
+
+    if choice.lower() in answers_of_agreement:
+        pass
+    else:
+        return
+    name=input('Введите название файла для экспорта в CSV: ')
+    if not name.endswith('.csv'):
+        name+='.csv'
+    with open(name, 'w', encoding='UTF-8-SIG') as file_w:
+
+        file_w.write("name\tradius\tmass\tdistance\tplanet_type\n")
+
+        for planet in planets:
+            file_w.write(f"{planet.name}\t{planet.radius}\t{planet.mass}\t{planet.distance}\t{planet.planet_type}\n")
+
+    print("✅ Экспорт в CSV завершён")
+
+def menu():
+    while True:
+        print('~~~~~~~~~~~~МЕНЮ~~~~~~~~~~~~')
+        print('1 - загрузка RAM из файла')
+        print('2 - сохранение RAM в файл')
+        print('3 - просмотр всех записей')
+        print('4 - добавление новой записи')
+        print('5 - поиск записи (по разным критериям)')
+        print('6 - редактирование записи')
+        print('7 - удаление записи')
+        print('8 - сортировка (по разным полям)')
+        print('9 - экспорт в CSV')
+        print('10 - выход')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+        time.sleep(1)
+        choice=input('🟢 Выбор: ')
+
+
+
+        if choice=='1':
+            books.clear()
+            file_name=input('Введите имя файла: ')
+            load_from_file(file_name)
+        elif choice=='2':
+            file_name=input('Введите имя файла: ')
+            save_to_file(file_name)
+        elif choice=='3':
+            if not(books):
+                print('⛔ БД пустая')
+            else:
+                for book in books:
+                    print(book)
+        elif choice=='4':
+            add_book()
+        elif choice=='5':
+            search()
+        elif choice=='6':
+            print('❌ Временно не работает!')
+        elif choice=='7':
+            print('❌ Временно не работает!')
+        elif choice=='8':
+            print('❌ Временно не работает!')
+        elif choice=='9':
+            print('❌ Временно не работает!')
+        elif choice=='10':
+            print('✅ Успешный выход!')
+            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            break
+        else:
+            print('❌ Неверный выбор!')
+
+if __name__=='__main__':
+    menu()
+
+
+
+
+
+
