@@ -44,14 +44,32 @@ def add_planet():
     print(f'✅Планета {planet.name} с ID {planet.id} успешно создана!')
 
 def delete_planet():
-    name=input('Введите название планеты для удаления: ')
-    for planet in planets:
-        if planet.name.lower() == name.lower():
-            planets.remove(planet)
-            print("✅Планета успешно удалена")
-            return
+    print('~~~~~~~~~~~~МЕНЮ УДАЛЕНИЯ~~~~~~~~~~~~')
+    print('1 - удаление по названию планеты')
+    print('2 - удаление по ID планеты')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-    print("❌ Планета не найдена")
+    choice = input('Выбор: ')
+    if choice=='1':
+        name=input('Введите название планеты для удаления: ')
+    elif choice=='2':
+        id=input('Введите ID планеты для удаления: ')
+    else:
+        print("❌ Неверный выбор")
+        return
+    for planet in planets:
+        if choice=='1':
+            if planet.name.lower() == name.lower():
+                planets.remove(planet)
+                print("✅Планета успешно удалена")
+                return
+        elif choice=='2':
+            if str(planet.id) == id:
+                planets.remove(planet)
+                print("✅Планета успешно удалена")
+                return
+
+    print("❌ Планета для удаления не найдена")
 def edit_planet():
     name=input('Введите название планеты для изменения параметров: ')
 
