@@ -1,4 +1,5 @@
 from planet import Planet
+import time
 
 planets=[]
 
@@ -146,14 +147,26 @@ def sort_planets():
     print("✅ Планеты успешно отсортированы")
 
 def export_to_csv():
+    print('❗ВНИМАНИЕ!\n1)Формат .csv сохраняет данные без учета форматирования.\n2)Если файл с данным названием существует, то он должен быть закрыт.')
+
+    time.sleep(1)
+
+    answers_of_agreement=('да','y','д','yes','yeah','yep','ознакомился','ознакомилась','ознакомилось','пойдет','го','все ок','ок','jr','lf')
+    choice=input('Вы подтверждаете, что ознакомились с предупреждением? Да/нет: ')
+
+    if choice.lower() in answers_of_agreement:
+        pass
+    else:
+        return
     name=input('Введите название файла для экспорта в CSV: ')
     if not name.endswith('.csv'):
         name+='.csv'
-    with open(name, 'w', encoding='UTF-8') as file_w:
-        file_w.write("name,radius,mass,distance,planet_type\n")
+    with open(name, 'w', encoding='UTF-8-SIG') as file_w:
+
+        file_w.write("name\tradius\tmass\tdistance\tplanet_type\n")
 
         for planet in planets:
-            file_w.write(f"{planet.name},{planet.radius},{planet.mass},{planet.distance},{planet.planet_type}\n")
+            file_w.write(f"{planet.name}\t{planet.radius}\t{planet.mass}\t{planet.distance}\t{planet.planet_type}\n")
 
     print("✅ Экспорт в CSV завершён")
 
@@ -172,6 +185,7 @@ def menu():
         print('10 - выход')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
+        time.sleep(1)
         choice=input('🟢Выбор: ')
 
 
