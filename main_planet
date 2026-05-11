@@ -8,11 +8,17 @@ def input_float(text):
         try:
             value=float(input(text))
             if value<=0:
-                print("❌Значение должно быть больше 0")
+                print("❌ Значение должно быть больше 0")
                 continue
             return value
         except ValueError:
-            print("❌Введите число!")
+            print("❌ Введите число!")
+def input_str(text):
+    while True:
+        value=input(text).strip()
+        if value:
+            return value
+        print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
     with open(file_name,'r',encoding='UTF-8') as file_r:
@@ -25,24 +31,24 @@ def load_from_file(file_name):
                           float(data[1]),float(data[2]),float(data[3]),
                           data[4])
             planets.append(planet)
-        print('✅Планеты успешно загружены!')
+        print('✅ Планеты успешно загружены!')
 
 def save_to_file(file_name):
     with open(file_name,'w',encoding='UTF-8') as file_w:
         for planet in planets:
             file_w.write(f'{planet.name};{planet.radius};{planet.mass};{planet.distance};{planet.planet_type}\n')
-        print(f'✅Планеты успешно сохранены!')
+        print(f'✅ Планеты успешно сохранены!')
 
 def add_planet():
-    name=input('Введите название планеты: ')
+    name=input_str('Введите название планеты: ')
     radius = input_float('Введите радиус планеты (в км): ')
     mass = input_float('Введите массу планеты (в кг): ')
     distance = input_float('Введите расстояние от планеты до Солнца (в км): ')
-    planet_type = input('Введите тип планеты: ')
+    planet_type = input_str('Введите тип планеты: ')
 
     planet=Planet(name,radius,mass,distance,planet_type)
     planets.append(planet)
-    print(f'✅Планета {planet.name} с ID {planet.id} успешно создана!')
+    print(f'✅ Планета {planet.name} с ID {planet.id} успешно создана!')
 
 def delete_planet():
     print('~~~~~~~~~~~~МЕНЮ УДАЛЕНИЯ~~~~~~~~~~~~')
@@ -62,29 +68,29 @@ def delete_planet():
         if choice=='1':
             if planet.name.lower() == name.lower():
                 planets.remove(planet)
-                print("✅Планета успешно удалена")
+                print("✅ Планета успешно удалена")
                 return
         elif choice=='2':
             if str(planet.id) == id:
                 planets.remove(planet)
-                print("✅Планета успешно удалена")
+                print("✅ Планета успешно удалена")
                 return
 
     print("❌ Планета для удаления не найдена")
 def edit_planet():
-    name=input('Введите название планеты для изменения параметров: ')
+    id=input('Введите ID планеты для изменения параметров: ')
 
     for planet in planets:
-        if planet.name.lower()==name.lower():
+        if str(planet.id)==id:
             print('Введите новые данные планеты')
             print()
-            planet.name=input('Название: ')
+            planet.name=input_str('Название: ')
             planet.radius=input_float('Радиус (в км):')
             planet.mass=input_float('Масса (в кг):')
             planet.distance=input_float('Расстояние от планеты до Солнца (в км):')
-            planet.planet_type=input('Тип: ')
+            planet.planet_type=input_str('Тип: ')
             print()
-            print('✅Планета успешно изменена')
+            print('✅ Планета успешно изменена')
             return
     print("❌ Планета не найдена")
 
@@ -116,7 +122,7 @@ def search():
         print("❌ Неверный выбор")
         return
     if not found:
-        print('⛔Ничего не найдено')
+        print('⛔ Ничего не найдено')
 def sort_planets():
     if not planets:
         print("⛔ БД пустая")
