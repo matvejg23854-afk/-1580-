@@ -19,13 +19,18 @@ def load_from_file(file_name):
         for string in file_r:
             if not string.strip():
                 continue
+            try:
 
-            data=string.strip().split(';')
-            book=Book(data[0],data[1],
-                          input_int(data[2]),
-                          data[3],data[4],
-                          input_int(data[5]))
-            books.append(book)
+                data=string.strip().split(';')
+                book=Book(data[0],data[1],
+                              int(data[2]),
+                              data[3],data[4],
+                              int(data[5]))
+                books.append(book)
+            except ValueError:
+                print(f'❌ Ошибка чтения строки: {string}')
+                books.clear()
+                return
         print('✅ Книги успешно загружены!')
 
 def save_to_file(file_name):
@@ -70,7 +75,7 @@ def delete_book():
         elif choice=='2':
             if str(book.id) == id:
                 books.remove(book)
-                print(f"✅ Книга успешно удалена с ID {book_id}")
+                print(f"✅ Книга успешно удалена с ID {id}")
                 return
 
     print("❌ Книга для удаления не найдена")
@@ -78,13 +83,13 @@ def delete_book():
 def edit_book():
     id=input('Введите ID книги для изменения параметров: ')
 
-    for planet in planets:
-        if planet.id==id:
+    for book in books:
+        if str(book.id)==id:
             print('Введите новые данные книги')
             print()
             book.name=input('Название: ')
             book.author=input('ФИО автора: ')
-            book.book.year_of_publication=input_int('Год издания: ')
+            book.year_of_publication=input_int('Год издания: ')
             book.isbn=input('ISBN: ')
             book.genre=input('Жанр: ')
             book.pages = input_int('Количество страниц: ')
@@ -133,7 +138,7 @@ def search():
 
 
 def sort_books():
-    if not planets:
+    if not books:
         print("⛔ БД пустая")
         return
     print("~~~~~~~~~~~~СОРТИРОВКА~~~~~~~~~~~~")
@@ -141,13 +146,13 @@ def sort_books():
     print("2 - по году издания")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     choice = input("Выбор: ")
-    n = len(planets)
+    n = len(books)
     for i in range(n):
         for j in range(n-i-1):
             if choice=='1':
                 condition=books[j]>books[j+1]
             elif choice=='2':
-                condition=planets[j].year_of_publication>planets[j+1].year_of_publication
+                condition=books[j].year_of_publication>books[j+1].year_of_publication
             else:
                 print("❌ Неверный выбор")
                 return
