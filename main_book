@@ -77,13 +77,16 @@ def delete_book():
     else:
         print("❌ Неверный выбор")
         return
+    
+    key=False
     for book in books:
         if choice=='1':
             if book.name.lower() == name.lower():
                 deleted_books.append(book)
                 books.remove(book)
-            print(f"✅ Книг(а/и) с названием: '{name}'  успешно удален(а/ы) c ID")
-            return
+                key=True
+            
+            
 
         elif choice=='2':
             if str(book.id) == id:
@@ -91,7 +94,9 @@ def delete_book():
                 books.remove(book)
                 print(f"✅ Книга успешно удалена с ID {id}")
                 return
-
+    if key:
+        print(f"✅ Книг(а/и) с названием: '{name}'  успешно удален(а/ы) c ID")
+        return
     print("❌ Книга для удаления не найдена")
 
 def edit_book():
