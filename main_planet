@@ -22,22 +22,23 @@ def input_str(text):
         print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
-    try:
-        with open(file_name,'r',encoding='UTF-8') as file_r:
-            for string in file_r:
-                if not string.strip():
-                    continue
+    while True:
+        try:
+            with open(file_name,'r',encoding='UTF-8') as file_r:
+                for string in file_r:
+                    if not string.strip():
+                        continue
 
-                data=string.strip().split(';')
-                planet=Planet(data[0],
-                                float(data[1]),float(data[2]),float(data[3]),
-                                data[4])
-                planets.append(planet)
-            print('✅ Планеты успешно загружены!')
-    
-    except FileNotFoundError:
-        print('❌ Файл не найден')
-        return
+                    data=string.strip().split(';')
+                    planet=Planet(data[0],
+                                  float(data[1]),float(data[2]),float(data[3]), #прикольно, кстати, но в book я исправил баг с чтением строки, а тут нет. Если успею исправить, то круто
+                                  data[4])
+                    planets.append(planet)
+                print('✅ Планеты успешно загружены!')
+                return
+        except FileNotFoundError:
+            print('❌ Файл не найден')
+            return
 
 def save_to_file(file_name):
     with open(file_name,'w',encoding='UTF-8') as file_w:
@@ -75,8 +76,8 @@ def delete_planet():
             if planet.name.lower() == name.lower():
                 deleted_planets.append(planet)
                 planets.remove(planet)
-                print("✅ Планета успешно удалена")
-                return
+            print(f"✅ Планет(а/ы) с названием: {name} успешно удален(а/ы)")
+
         elif choice=='2':
             if str(planet.id) == id:
                 deleted_planets.append(planet)
