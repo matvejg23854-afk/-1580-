@@ -34,7 +34,7 @@ def load_from_file(file_name):
                                 data[4])
                 planets.append(planet)
             print('✅ Планеты успешно загружены!')
-            break
+    
     except FileNotFoundError:
         print('❌ Файл не найден')
         return
