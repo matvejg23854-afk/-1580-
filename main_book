@@ -2,6 +2,7 @@ from book import Book
 import time
 
 books=[]
+deleted_books=[]
 
 def input_int(text):
     while True:
@@ -74,12 +75,14 @@ def delete_book():
     for book in books:
         if choice=='1':
             if book.name.lower() == name.lower():
+                deleted_books.append(book)
                 book_id=book.id
                 books.remove(book)
                 print(f"✅ Книга успешно удалена c ID {book_id}")
 
         elif choice=='2':
             if str(book.id) == id:
+                deleted_books.append(book)
                 books.remove(book)
                 print(f"✅ Книга успешно удалена с ID {id}")
                 return
@@ -197,6 +200,22 @@ def exit():
     print('✅ Успешный выход!')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
+def settings():
+    print('~~~~~~~~~~~~НАСТРОЙКИ~~~~~~~~~~~~')
+    print('1 - просмотр удаленных планет')
+    print('2 - назад')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    choice=input('Выбор: ')
+    if choice=='1':
+        if not(deleted_books):
+            print('❌ Нет удаленных планет!')
+        for del_book in deleted_books:
+            print(del_book)
+    elif choice=='2':
+        pass
+    else:
+        print('❌ Неверный выбор!')
+        return settings()
 
 def menu():
     saved=True
@@ -212,6 +231,7 @@ def menu():
         print('8 - сортировка (по разным полям)')
         print('9 - экспорт в CSV')
         print('10 - выход')
+        print('11 - настройки')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
         time.sleep(1)
@@ -220,6 +240,14 @@ def menu():
 
 
         if choice=='1':
+            if books:
+                print('❗ При открытии файла текущие изменения будут утеряны. Вы уверены, что хотите открыть файл?')
+                choice = input('Выбор(да/нет): ')
+                if choice.lower() == 'да':
+                    pass
+                else:
+                    continue
+            deleted_books.extend(books) #опять же лучше в load забабахать, если до защиты будет время, исправлю + этого комментария не будет
             books.clear()
             file_name=input('Введите имя файла: ')
             load_from_file(file_name)
@@ -227,7 +255,7 @@ def menu():
             saved=True
             file_name=input('Введите имя файла: ')
             save_to_file(file_name)
-        elif choice=='3':
+        elif choice=='3': #заметил в 22:40 13.05.2026, что тут лучше отдельную функцию реализовать, как и в настройках
             if not(books):
                 print('⛔ БД пустая')
             else:
@@ -259,6 +287,8 @@ def menu():
                 if choice.lower() == 'да':
                     exit()
                     break
+        elif choice == '11':
+            settings()
         else:
             print('❌ Неверный выбор!')
 
