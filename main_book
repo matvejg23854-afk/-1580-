@@ -83,6 +83,7 @@ def delete_book():
                 deleted_books.append(book)
                 books.remove(book)
             print(f"✅ Книг(а/и) с названием: '{name}'  успешно удален(а/ы) c ID")
+            return
 
         elif choice=='2':
             if str(book.id) == id:
