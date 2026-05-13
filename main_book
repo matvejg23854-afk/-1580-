@@ -28,7 +28,7 @@ def load_from_file(file_name):
                 if not string.strip():
                     continue
                 try:
-    
+
                     data=string.strip().split(';')
                     book=Book(data[0],data[1],
                                   int(data[2]),
@@ -81,9 +81,8 @@ def delete_book():
         if choice=='1':
             if book.name.lower() == name.lower():
                 deleted_books.append(book)
-                book_id=book.id
                 books.remove(book)
-                print(f"✅ Книга успешно удалена c ID {book_id}")
+            print(f"✅ Книг(а/и) с названием: '{name}'  успешно удален(а/ы) c ID")
 
         elif choice=='2':
             if str(book.id) == id:
