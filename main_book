@@ -22,23 +22,28 @@ def input_str(text):
         print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
-    with open(file_name,'r',encoding='UTF-8') as file_r:
-        for string in file_r:
-            if not string.strip():
-                continue
-            try:
+    try:
+        with open(file_name,'r',encoding='UTF-8') as file_r:
+            for string in file_r:
+                if not string.strip():
+                    continue
+                try:
+    
+                    data=string.strip().split(';')
+                    book=Book(data[0],data[1],
+                                  int(data[2]),
+                                  data[3],data[4],
+                                  int(data[5]))
+                    books.append(book)
+                except ValueError:
+                    print(f'❌ Ошибка чтения строки: {string}')
+                    books.clear()
+                    return
+            print('✅ Книги успешно загружены!')
+    except FileNotFoundError:
+        print('❌ Файл не найден')
+        return
 
-                data=string.strip().split(';')
-                book=Book(data[0],data[1],
-                              int(data[2]),
-                              data[3],data[4],
-                              int(data[5]))
-                books.append(book)
-            except ValueError:
-                print(f'❌ Ошибка чтения строки: {string}')
-                books.clear()
-                return
-        print('✅ Книги успешно загружены!')
 
 def save_to_file(file_name):
     with open(file_name,'w',encoding='UTF-8') as file_w:
@@ -247,7 +252,7 @@ def menu():
                     pass
                 else:
                     continue
-            deleted_books.extend(books) #опять же лучше в load забабахать, если до защиты будет время, исправлю + этого комментария не будет
+            deleted_books.extend(books)
             books.clear()
             file_name=input('Введите имя файла: ')
             load_from_file(file_name)
