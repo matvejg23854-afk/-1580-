@@ -153,7 +153,7 @@ def sort_planets():
     print("✅ Планеты успешно отсортированы")
 
 def export_to_csv():
-    print('❗ВНИМАНИЕ!\n1)Формат .csv сохраняет данные без учета форматирования.\n2)Если файл с данным названием существует, то он должен быть закрыт.')
+    print('❗ ВНИМАНИЕ!\n1)Формат .csv сохраняет данные без учета форматирования.\n2)Если файл с данным названием существует, то он должен быть закрыт.')
 
     time.sleep(1)
 
@@ -175,8 +175,13 @@ def export_to_csv():
             file_w.write(f"{planet.name}\t{planet.radius}\t{planet.mass}\t{planet.distance}\t{planet.planet_type}\n")
 
     print("✅ Экспорт в CSV завершён")
+def exit():
+    print('✅ Успешный выход!')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
 
 def menu():
+    saved = True
     while True:
         print('~~~~~~~~~~~~МЕНЮ~~~~~~~~~~~~')
         print('1 - загрузка RAM из файла')
@@ -196,6 +201,7 @@ def menu():
 
 
 
+
         if choice=='1':
             planets.clear()
             file_name=input('Введите имя файла: ')
@@ -203,6 +209,7 @@ def menu():
         elif choice=='2':
             file_name=input('Введите имя файла: ')
             save_to_file(file_name)
+            saved=True
         elif choice=='3':
             if not(planets):
                 print('⛔БД пустая')
@@ -210,23 +217,34 @@ def menu():
                 for planet in planets:
                     print(planet)
         elif choice=='4':
+            saved=False
             add_planet()
         elif choice=='5':
             search()
         elif choice=='6':
+            saved=False
             edit_planet()
         elif choice=='7':
+            saved=False
             delete_planet()
         elif choice=='8':
+            saved=False
             sort_planets()
         elif choice=='9':
             export_to_csv()
         elif choice=='10':
-            print('✅Успешный выход!')
-            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-            break
+            if saved:
+                exit()
+                break
+            else:
+                print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n❗ Вы не сохранили текущие изменения. При выходе они будут утеряны. Вы уверены, что хотите завершить работу программы?')
+                choice=input('Выбор(да/нет): ')
+                if choice.lower()=='да':
+                    exit()
+                    break
+
         else:
-            print('❌Неверный выбор!')
+            print('❌ Неверный выбор!')
 
 if __name__=='__main__':
     menu()
