@@ -73,7 +73,8 @@ def delete_planet():
         return
 
     key=False
-    for planet in planets:
+    copy_planets=planets.copy()
+    for planet in copy_planets:
         if choice=='1':
             if planet.name.lower() == name.lower():
                 deleted_planets.append(planet)
