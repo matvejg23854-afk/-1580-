@@ -192,7 +192,14 @@ def export_to_csv():
 
     print("✅ Экспорт в CSV завершён")
 
+
+def exit():
+    print('✅ Успешный выход!')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+
 def menu():
+    saved=True
     while True:
         print('~~~~~~~~~~~~МЕНЮ~~~~~~~~~~~~')
         print('1 - загрузка RAM из файла')
@@ -217,6 +224,7 @@ def menu():
             file_name=input('Введите имя файла: ')
             load_from_file(file_name)
         elif choice=='2':
+            saved=True
             file_name=input('Введите имя файла: ')
             save_to_file(file_name)
         elif choice=='3':
@@ -226,21 +234,31 @@ def menu():
                 for book in books:
                     print(book)
         elif choice=='4':
+            saved=False
             add_book()
         elif choice=='5':
             search()
         elif choice=='6':
+            saved=False
             edit_book()
         elif choice=='7':
+            saved=False
             delete_book()
         elif choice=='8':
+            saved=False
             sort_books()
         elif choice=='9':
             export_to_csv()
         elif choice=='10':
-            print('✅ Успешный выход!')
-            print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-            break
+            if saved:
+                exit()
+                break
+            else:
+                print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n❗ Вы не сохранили текущие изменения. При выходе они будут утеряны. Вы уверены, что хотите завершить работу программы?')
+                choice = input('Выбор(да/нет): ')
+                if choice.lower() == 'да':
+                    exit()
+                    break
         else:
             print('❌ Неверный выбор!')
 
