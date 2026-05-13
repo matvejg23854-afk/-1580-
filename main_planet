@@ -2,6 +2,7 @@ from planet import Planet
 import time
 
 planets=[]
+deleted_planets=[]
 
 def input_float(text):
     while True:
@@ -67,11 +68,13 @@ def delete_planet():
     for planet in planets:
         if choice=='1':
             if planet.name.lower() == name.lower():
+                deleted_planets.append(planet)
                 planets.remove(planet)
                 print("✅ Планета успешно удалена")
                 return
         elif choice=='2':
             if str(planet.id) == id:
+                deleted_planets.append(planet)
                 planets.remove(planet)
                 print("✅ Планета успешно удалена")
                 return
@@ -179,7 +182,22 @@ def exit():
     print('✅ Успешный выход!')
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-
+def settings():
+    print('~~~~~~~~~~~~НАСТРОЙКИ~~~~~~~~~~~~')
+    print('1 - просмотр удаленных планет')
+    print('2 - назад')
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    choice=input('Выбор: ')
+    if choice=='1':
+        if not(deleted_planets):
+            print('❌ Нет удаленных планет!')
+        for del_planet in deleted_planets:
+            print(del_planet)
+    elif choice=='2':
+        pass
+    else:
+        print('❌ Неверный выбор!')
+        return settings()
 def menu():
     saved = True
     while True:
@@ -194,6 +212,7 @@ def menu():
         print('8 - сортировка (по разным полям)')
         print('9 - экспорт в CSV')
         print('10 - выход')
+        print('11 - настройки')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
         time.sleep(1)
@@ -203,6 +222,14 @@ def menu():
 
 
         if choice=='1':
+            if planets:
+                print('❗ При открытии файла текущие изменения будут утеряны. Вы уверены, что хотите открыть файл?')
+                choice = input('Выбор(да/нет): ')
+                if choice.lower() == 'да':
+                    pass
+                else:
+                    continue
+            deleted_planets.extend(planets)
             planets.clear()
             file_name=input('Введите имя файла: ')
             load_from_file(file_name)
@@ -242,6 +269,8 @@ def menu():
                 if choice.lower()=='да':
                     exit()
                     break
+        elif choice=='11':
+            settings()
 
         else:
             print('❌ Неверный выбор!')
