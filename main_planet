@@ -22,23 +22,22 @@ def input_str(text):
         print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
-    while True:
-        try:
-            with open(file_name,'r',encoding='UTF-8') as file_r:
-                for string in file_r:
-                    if not string.strip():
-                        continue
+    try:
+        with open(file_name,'r',encoding='UTF-8') as file_r:
+            for string in file_r:
+                if not string.strip():
+                    continue
 
-                    data=string.strip().split(';')
-                    planet=Planet(data[0],
-                                  float(data[1]),float(data[2]),float(data[3]),
-                                  data[4])
-                    planets.append(planet)
-                print('✅ Планеты успешно загружены!')
-                break
-        except FileNotFoundError:
-            print('❌ Файл не найден')
-            return
+                data=string.strip().split(';')
+                planet=Planet(data[0],
+                                float(data[1]),float(data[2]),float(data[3]),
+                                data[4])
+                planets.append(planet)
+            print('✅ Планеты успешно загружены!')
+            break
+    except FileNotFoundError:
+        print('❌ Файл не найден')
+        return
 
 def save_to_file(file_name):
     with open(file_name,'w',encoding='UTF-8') as file_w:
