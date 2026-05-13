@@ -71,12 +71,15 @@ def delete_planet():
     else:
         print("❌ Неверный выбор")
         return
+
+    key=False
     for planet in planets:
         if choice=='1':
             if planet.name.lower() == name.lower():
                 deleted_planets.append(planet)
                 planets.remove(planet)
-            print(f"✅ Планет(а/ы) с названием: {name} успешно удален(а/ы)")
+                key=True
+
 
         elif choice=='2':
             if str(planet.id) == id:
@@ -84,6 +87,9 @@ def delete_planet():
                 planets.remove(planet)
                 print("✅ Планета успешно удалена")
                 return
+    if key:
+        print(f"✅ Планет(а/ы) с названием: {name} успешно удален(а/ы)")
+        return
 
     print("❌ Планета для удаления не найдена")
 def edit_planet():
