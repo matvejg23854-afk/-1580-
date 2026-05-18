@@ -10,31 +10,31 @@ class Planet:
             raise TypeError("Радиус должен быть числом")
         if radius<=0:
             raise ValueError("Радиус должен быть больше 0")
-        
-        
+
+
         try:
             mass = float(mass)
         except ValueError:
             raise TypeError("Масса должна быть числом")
         if mass <= 0:
             raise ValueError("Масса должна быть больше 0")
-        
+
         try:
             distance = float(distance)
         except ValueError:
             raise TypeError("Расстояние должно быть числом")
         if distance <= 0:
             raise ValueError("Расстояние должно быть больше 0")
-        
+
 
         if not isinstance(planet_type, str) or not planet_type.strip():
             raise ValueError("Тип планеты не может быть пустым")
 
-        self.name=name
+        self.name=name.strip()
         self.radius=float(radius)
         self.mass=float(mass)
         self.distance=float(distance)
-        self.planet_type=planet_type
+        self.planet_type=planet_type.strip()
         Planet.counter+=1
         self.id=Planet.counter
         print(f"Добавление планеты (в RAM) с ID: {self.id}")
