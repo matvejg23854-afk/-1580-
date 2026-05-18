@@ -161,9 +161,9 @@ def sort_planets():
             if choice=='1':
                 condition=planets[j] > planets[j + 1]
             elif choice=='2':
-                condition = planets[j].radius>planets[j + 1].radius
+                condition = not(planets[j]<=planets[j + 1])
             elif choice=='3':
-                condition=planets[j].mass>planets[j + 1].mass
+                condition=planets[j]>=planets[j + 1] and planets[j+1]!=planets[j]
 
             else:
                 print("❌ Неверный выбор")
