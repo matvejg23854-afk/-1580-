@@ -1,22 +1,6 @@
 planets=[]
 deleted_planets=[]
 from planet import Planet
-def input_float(text):
-    while True:
-        try:
-            value=float(input(text))
-            if value<=0:
-                print("❌ Значение должно быть больше 0")
-                continue
-            return value
-        except ValueError:
-            print("❌ Введите число!")
-def input_str(text):
-    while True:
-        value=input(text).strip()
-        if value:
-            return value
-        print("❌ Текстовое значение не может быть пустым")
 
 def load_from_file(file_name):
     if planets:
@@ -37,7 +21,7 @@ def load_from_file(file_name):
 
                     data=string.strip().split(';')
                     planet=Planet(data[0],
-                                  float(data[1]),float(data[2]),float(data[3]), #прикольно, кстати, но в book я исправил баг с чтением строки, а тут нет. Если успею исправить, то круто
+                                  data[1],data[2],data[3], #прикольно, кстати, но в book я исправил баг с чтением строки, а тут нет. Если успею исправить, то круто
                                   data[4])
                     planets.append(planet)
                 print('✅ Планеты успешно загружены!')
@@ -53,11 +37,11 @@ def save_to_file(file_name):
         print(f'✅ Планеты успешно сохранены!')
 
 def add_planet():
-    name=input_str('Введите название планеты: ')
-    radius = input_float('Введите радиус планеты (в км): ')
-    mass = input_float('Введите массу планеты (в кг): ')
-    distance = input_float('Введите расстояние от планеты до Солнца (в км): ')
-    planet_type = input_str('Введите тип планеты: ')
+    name=input('Введите название планеты: ')
+    radius = input('Введите радиус планеты (в км): ')
+    mass = input('Введите массу планеты (в кг): ')
+    distance = input('Введите расстояние от планеты до Солнца (в км): ')
+    planet_type = input('Введите тип планеты: ')
 
     planet=Planet(name,radius,mass,distance,planet_type)
     planets.append(planet)
@@ -106,11 +90,11 @@ def edit_planet():
         if str(planet.id)==id:
             print('Введите новые данные планеты')
             print()
-            planet.name=input_str('Название: ')
-            planet.radius=input_float('Радиус (в км):')
-            planet.mass=input_float('Масса (в кг):')
-            planet.distance=input_float('Расстояние от планеты до Солнца (в км):')
-            planet.planet_type=input_str('Тип: ')
+            planet.name=input('Название: ')
+            planet.radius=input('Радиус (в км):')
+            planet.mass=input('Масса (в кг):')
+            planet.distance=input('Расстояние от планеты до Солнца (в км):')
+            planet.planet_type=input('Тип: ')
             print()
             print('✅ Планета успешно изменена')
             return
