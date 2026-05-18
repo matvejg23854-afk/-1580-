@@ -27,7 +27,7 @@ class Planet:
     def __ne__(self, other):
         if not isinstance(other, Planet):
             return True
-        return self.name != other.name
+        return self.mass != other.mass
 
 
     def __lt__(self, other):
@@ -36,7 +36,7 @@ class Planet:
         return self.distance < other.distance
 
 
-    def __gt__(self, other):
+    def __gt__(self, other):#необязательно, но пусть будет
         if not isinstance(other, Planet):
             return NotImplemented
         return self.distance > other.distance
@@ -45,13 +45,13 @@ class Planet:
     def __le__(self, other):
         if not isinstance(other, Planet):
             return NotImplemented
-        return self.distance <= other.distance
+        return self.radius <= other.radius
 
 
     def __ge__(self, other):
         if not isinstance(other, Planet):
             return NotImplemented
-        return self.distance >= other.distance
+        return self.mass >= other.mass
 
     def __copy__(self):
         return Planet(
