@@ -4,20 +4,28 @@ class Planet:
         if not isinstance(name, str) or not name.strip():
             raise ValueError("Название не может быть пустым")
 
-        if not isinstance(radius, (int, float)):
+        try:
+            radius=float(radius)
+        except ValueError:
             raise TypeError("Радиус должен быть числом")
         if radius<=0:
             raise ValueError("Радиус должен быть больше 0")
-
-        if not isinstance(mass, (int, float)):
+        
+        
+        try:
+            mass = float(mass)
+        except ValueError:
             raise TypeError("Масса должна быть числом")
         if mass <= 0:
             raise ValueError("Масса должна быть больше 0")
-
-        if not isinstance(distance, (int, float)):
-            raise TypeError("Расстояние между солнцем и планетой должно быть числом")
+        
+        try:
+            distance = float(distance)
+        except ValueError:
+            raise TypeError("Расстояние должно быть числом")
         if distance <= 0:
-            raise ValueError("Расстояние между солнцем и планетой должно быть больше 0")
+            raise ValueError("Расстояние должно быть больше 0")
+        
 
         if not isinstance(planet_type, str) or not planet_type.strip():
             raise ValueError("Тип планеты не может быть пустым")
