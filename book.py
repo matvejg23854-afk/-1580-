@@ -20,47 +20,64 @@ class Book:
                 f"genre='{self.genre}',pages={self.pages}, "
                 f"id={self.id})")
 
+    @property
+    def name(self):
+        return self._name
 
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
             raise ValueError("Название иметь формат строки")
-        self.name = value
+        self._name = value
 
+    @property
+    def author(self):
+        return self._author
     @author.setter
     def author(self, value):
         if not isinstance(value, str):
             raise ValueError("Автор иметь формат строки")
-        self.author = value
+        self._author = value
 
+    @property
+    def year_of_publication(self):
+        return self._year_of_publication
     @year_of_publication.setter
     def year_of_publication(self, value):
         if not isinstance(value, int):
             raise ValueError("Год издания должен быть натуральным числом")
         if value<=0:
             raise ValueError("Год издания должен быть натуральным числом")
-        self.year_of_publication = value
+        self._year_of_publication = value
 
+    @property
+    def isbn(self):
+        return self._isbn
     @isbn.setter
     def isbn(self, value):
         if not isinstance(value, str):
             raise ValueError("ISBN иметь формат строки")
-        self.isbn = value
+        self._isbn = value
 
+    @property
+    def genre(self):
+        return self._genre
     @genre.setter
     def genre(self, value):
         if not isinstance(value, str):
             raise ValueError("Название иметь формат строки")
-        self.genre = value
+        self._genre = value
 
-
+    @property
+    def pages(self):
+        return self._pages
     @pages.setter
     def pages(self, value):
         if not isinstance(value, int):
             raise ValueError("Кол-во страниц должно быть натуральным числом")
         if value <= 0:
             raise ValueError("Кол-во страниц должно быть натуральным числом")
-        self.pages = value
+        self._pages = value
 
     def __eq__(self, other):
         if not isinstance(other, Book):
